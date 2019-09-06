@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Input from "./Input";
+import { Container as inputContainer } from "./Input";
 import useInput from "../Hooks/useInput";
+import { Compass, HeartEmpty, User } from "./Icons";
 
 const Header = styled.header`
   ${props => props.theme.whiteBox};
   width: 100%;
   border: 0;
+  background-color: white;
   border-bottom: ${props => props.theme.boxBorder};
   border-radius: 0px;
   margin-bottom: 60px;
@@ -20,9 +22,42 @@ const Header = styled.header`
 const HeaderWrapper = styled.div`
   width: 100%;
   max-width: ${props => props.theme.maxWidth};
+  display: flex;
+  justify-content: center;
 `;
 
-const HeaderColumn = styled.div``;
+const HeaderColumn = styled.div`
+  width: 33%;
+  text-align: center;
+  &:first-child {
+    margin-right: auto;
+    text-align: left;
+  }
+  &:last-child {
+    margin-left: auto;
+    text-align: right;
+  }
+`;
+
+const SearchInput = styled(inputContainer)`
+  background-color: ${props => props.theme.bgColor};
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 3px;
+  height: auto;
+  text-align: center;
+  width: 70%;
+  &::placeholder {
+    opacity: 0.8;
+    font-weight: 200;
+  }
+`;
+
+const HeaderLink = styled(Link)`
+  &:not(:last-child) {
+    margin-right: 30px;
+  }
+`;
 
 export default () => {
   const search = useInput("");
@@ -37,7 +72,18 @@ export default () => {
           </Link>
         </HeaderColumn>
         <HeaderColumn>
-          <Input {...search} placeholder="Search" />
+          <SearchInput {...search} placeholder="Search" />
+        </HeaderColumn>
+        <HeaderColumn>
+          <HeaderLink to="/explore">
+            <Compass />
+          </HeaderLink>
+          <HeaderLink to="/notifications">
+            <HeartEmpty />
+          </HeaderLink>
+          <HeaderLink to="/username">
+            <User />
+          </HeaderLink>
         </HeaderColumn>
       </HeaderWrapper>
     </Header>
